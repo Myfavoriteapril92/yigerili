@@ -2,7 +2,7 @@
  * 目标：装上桌面后断网也能用（农历库与节假日表都在本地）。
  * 策略：页面走「网络优先、缓存兜底」，静态资源走「缓存优先」。
  */
-var VERSION = 'ygl-v2';
+var VERSION = 'ygl-v3';
 var PRECACHE = VERSION + '-shell';
 var RUNTIME = VERSION + '-assets';
 
