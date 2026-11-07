@@ -219,7 +219,8 @@ function startApp() {
     if (sameDay(date, selected)) cls += ' sel';
     if (info.fests.length) cls += ' fest';
 
-    var label = info.fests.length ? shortest(info.fests) : info.lunarText;
+    /* 有节日显示节日，没有节日时让节气优先于农历日期（传统万年历的排法） */
+    var label = info.fests.length ? shortest(info.fests) : (info.jq || info.lunarText);
     if (!label) label = '&nbsp;';
 
     var inner = '<div class="di">' +
@@ -258,6 +259,9 @@ function startApp() {
     }
 
     var tags = '', i;
+    if (info.jq) {
+      tags += '<span class="tag jq">' + esc(info.jq) + '</span>';
+    }
     if (info.holiday) {
       tags += '<span class="tag ' + (info.holiday.work ? 'normal' : 'holiday') + '">' +
               esc(info.holiday.name) + (info.holiday.work ? ' · 上班' : ' · 放假') + '</span>';
