@@ -1,0 +1,23 @@
+# Android / Gradle 构建产物
+.gradle/
+build/
+app/build/
+local.properties
+captures/
+.externalNativeBuild/
+.cxx/
+*.apk
+*.aab
+*.iml
+
+# IDE
+.idea/
+.vscode/
+
+# 系统
+.DS_Store
+Thumbs.db
+
+# Python
+__pycache__/
+*.pyc

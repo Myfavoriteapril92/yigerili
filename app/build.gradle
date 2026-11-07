@@ -1,0 +1,72 @@
+plugins {
+    id 'com.android.application'
+}
+
+/* 网页本体放在仓库根目录（GitHub Pages 直接用同一份），
+ * 打包 APK 时再复制进 assets/web，网站和 App 永远同一套代码。 */
+def stagedWeb = layout.buildDirectory.dir('staged-web')
+
+tasks.register('stageWebAssets', Copy) {
+    from(rootProject.projectDir) {
+        include 'index.html'
+        include 'manifest.webmanifest'
+        include 'sw.js'
+        include 'assets/**'
+        exclude 'assets/**/*.md'
+    }
+    /* 放进 web/ 子目录：APK 内的路径就是 assets/web/index.html，
+     * 与 MainActivity 里的 START_URL 对应 */
+    into(stagedWeb.map { it.dir('web') })
+    doFirst { stagedWeb.get().asFile.mkdirs() }
+}
+
+tasks.named('preBuild') {
+    dependsOn 'stageWebAssets'
+}
+
+/* 双保险：AGP 的 mergeXxxAssets 一定在网页文件复制完之后再合并 */
+tasks.configureEach { t ->
+    if (t.name.startsWith('merge') && t.name.endsWith('Assets')) {
+        t.dependsOn 'stageWebAssets'
+    }
+}
+
+android {
+    namespace 'com.yigerili.app'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId 'com.yigerili.app'
+        minSdk 21
+        targetSdk 34
+        versionCode 1
+        versionName '1.0.0'
+    }
+
+    sourceSets {
+        main {
+            assets.srcDirs = ['src/main/assets', stagedWeb.get().asFile.absolutePath]
+        }
+    }
+
+    buildTypes {
+        debug {
+            applicationIdSuffix '.debug'
+            versionNameSuffix '-debug'
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    lint {
+        abortOnError false
+        checkReleaseBuilds false
+    }
+}

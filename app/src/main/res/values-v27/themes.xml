@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 长屏 / 挖孔屏：允许内容延伸到刘海两侧，由网页的 safe-area 内边距兜住 -->
+    <style name="AppTheme" parent="@android:style/Theme.Material.Light.NoActionBar">
+        <item name="android:windowBackground">#F5F5F7</item>
+        <item name="android:colorBackground">#F5F5F7</item>
+        <item name="android:statusBarColor">#F5F5F7</item>
+        <item name="android:navigationBarColor">#F5F5F7</item>
+        <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
+    </style>
+</resources>
