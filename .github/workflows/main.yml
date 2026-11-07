@@ -24,7 +24,8 @@ permissions:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    # ubuntu-latest 已切到 26.04，setup-android 在上面无法接受 SDK 许可证
+    runs-on: ubuntu-22.04
 
     steps:
       - name: 检出代码
@@ -38,6 +39,8 @@ jobs:
 
       - name: 准备 Android SDK
         uses: android-actions/setup-android@v3
+        with:
+          packages: 'platform-tools platforms;android-34 build-tools;34.0.0'
 
       - name: 准备 Gradle
         uses: gradle/actions/setup-gradle@v4
