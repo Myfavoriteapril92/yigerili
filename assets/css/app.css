@@ -359,3 +359,73 @@ body { padding:18px 14px calc(24px + env(safe-area-inset-bottom)); background:ra
 .num { font-size: 16px !important; }
 @media (max-height: 760px) and (orientation: portrait) { .num { font-size: 15px !important; } }
 @media (max-width: 360px) { .num { font-size: 14px !important; } }
+
+
+/* =========================================================================
+ *  紧凑布局
+ *  矮屏下原先让 .days 纵向撑满，日期格被拉到 70px 以上，整页松散。
+ *  这里改为按内容定高：格子固定高度、各处间距收紧、整块垂直居中。
+ * ========================================================================= */
+html,
+body {
+  height: auto !important;
+  min-height: 100%;
+}
+
+html { height: 100%; }
+
+body {
+  min-height: 100dvh !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center;
+  overflow: visible !important;
+  gap: 10px !important;
+  padding: 10px 14px calc(10px + env(safe-area-inset-bottom)) !important;
+}
+
+.calendar {
+  flex: 0 0 auto !important;
+  padding: 14px 15px 12px !important;
+  border-radius: 26px !important;
+}
+
+.top { margin-bottom: 2px !important; }
+
+.header { margin-bottom: 6px !important; }
+#monthTitle { font-size: 24px !important; line-height: 1.15; }
+#lunarYearText { font-size: 10px; line-height: 12px; min-height: 12px; }
+.today-btn { margin-top: 1px !important; padding: 3px 11px !important; font-size: 10px !important; }
+.nav-btn { width: 34px !important; height: 34px !important; }
+
+.weekdays { margin-bottom: 3px !important; }
+.weekdays > div { padding: 1px 0 !important; }
+
+.days {
+  flex: 0 0 auto !important;
+  align-content: flex-start !important;
+}
+.day { height: 52px !important; padding: 2px 3px !important; }
+.di { border-radius: 14px; }
+.num { font-size: 15px !important; }
+.lunar { font-size: 9px !important; }
+
+.calendar > .panel {
+  flex: 0 0 auto !important;
+  margin-top: 7px !important;
+  margin-bottom: 0 !important;
+  padding: 10px 12px !important;
+  min-height: 0 !important;
+  border-radius: 18px !important;
+}
+.calendar > .panel .date-line { font-size: 15px !important; margin-bottom: 2px !important; }
+.calendar > .panel .lunar-line { font-size: 11px; margin-bottom: 5px !important; }
+.calendar > .panel .tags { margin-bottom: 4px !important; gap: 4px !important; }
+.calendar > .panel .tag { font-size: 9px !important; padding: 3px 7px !important; }
+.calendar > .panel .gz { font-size: 10px; line-height: 1.5 !important; }
+
+.author-links { margin: 0 auto !important; padding: 4px 7px !important; }
+.author-link { padding: 5px 10px !important; gap: 7px !important; font-size: 12px !important; }
+.kuaishou-icon,
+.telegram-icon { width: 24px !important; height: 24px !important; flex-basis: 24px !important; }
+.social-divider { height: 18px !important; }
